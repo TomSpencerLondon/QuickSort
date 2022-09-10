@@ -12,6 +12,7 @@ public class SortTest {
   void testSort() {
     assertEquals(asList(), sort(asList()));
     assertEquals(asList(1), sort(asList(1)));
+    assertEquals(asList(1, 2), sort(asList(1, 2)));
   }
 
   private List<Integer> sort(List<Integer> list) {
