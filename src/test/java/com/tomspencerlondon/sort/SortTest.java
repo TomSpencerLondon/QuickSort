@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 public class SortTest {
@@ -17,42 +18,23 @@ public class SortTest {
     assertEquals(asList(1, 2), sort(asList(2, 1)));
     assertEquals(asList(1, 2, 3), sort(asList(1, 2, 3)));
     assertEquals(asList(1, 2, 3), sort(asList(2, 1, 3)));
+    assertEquals(asList(1, 2, 3), sort(asList(1, 3, 2)));
+    assertEquals(asList(1, 2, 3), sort(asList(3, 2, 1)));
+    assertEquals(asList(1, 2, 3, 4), sort(asList(1,2, 3, 4)));
+    assertEquals(asList(1, 2, 3, 4, 5), sort(asList(1,2,5, 3, 4)));
   }
 
   private List<Integer> sort(List<Integer> list) {
     if (list.size() <= 1) {
       return list;
-    } else if (list.size() == 2){
-      int first = list.get(0);
-      int second = list.get(1);
-
-      if (first > second) {
-        return asList(second, first);
-      } else {
-        return asList(first, second);
-      }
     } else {
-      int first = list.get(0);
-      int middle = list.get(1);
-      int last = list.get(2);
-      List<Integer> lessers = new ArrayList<>();
-      List<Integer> greaters = new ArrayList<>();
-      if (first < middle) {
-        lessers.add(first);
-      }
-      if (last < middle) {
-        lessers.add(last);
-      }
-      if (first > middle) {
-        greaters.add(first);
-      }
-      if (last > middle) {
-        greaters.add(last);
-      }
+      int middle = list.get(0);
+      List<Integer> lessers = list.stream().filter(x -> x < middle).collect(Collectors.toList());
+      List<Integer> greaters = list.stream().filter(x -> x > middle).collect(Collectors.toList());
       List<Integer> result = new ArrayList<>();
-      result.addAll(lessers);
+      result.addAll(sort(lessers));
       result.add(middle);
-      result.addAll(greaters);
+      result.addAll(sort(greaters));
       return result;
     }
   }
