@@ -28,6 +28,7 @@ public class SortTest {
         sort(asList(3,1, 4, 1, 5, 9, 2, 6, 5, 3, 8, 9, 7, 9, 3)));
   }
 
+  // Function avoids changing the contents of the input list
   private List<Integer> sort(List<Integer> list) {
     List<Integer> result = new ArrayList<>();
     if (list.size() == 0) {
